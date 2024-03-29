@@ -5,6 +5,7 @@ on:
     branches:
       - devops
       - cicd
+      - test
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
