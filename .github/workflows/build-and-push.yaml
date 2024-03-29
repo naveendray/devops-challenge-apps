@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - devops
-
+      - cicd
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
