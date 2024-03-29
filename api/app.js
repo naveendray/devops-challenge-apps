@@ -27,6 +27,16 @@ app.get('/api/status', function(req, res) {
   });
 });
 
+// Define a route for the homepage
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
+
+// Define a route for test api
+app.get('/api/test', (req, res) => {
+  res.send('test api!');
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
