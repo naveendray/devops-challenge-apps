@@ -3,7 +3,8 @@ var app = express();
 var uuid = require('node-uuid');
 
 var pg = require('pg');
-var conString = process.env.DB; // "postgres://username:password@localhost/database";
+//var conString = process.env.DB; // "postgres://username:password@localhost/database";
+var conString = "postgresql://postgres:password@wireapps.c3qk0ywowvqc.ap-southeast-1.rds.amazonaws.com:5432/wireapps";
 
 // Routes
 app.get('/api/status', function(req, res) {
