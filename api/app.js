@@ -2,31 +2,71 @@ var express = require('express');
 var app = express();
 var uuid = require('node-uuid');
 
-var pg = require('pg');
+const { Pool } = require('pg');
+
 //var conString = process.env.DB; // "postgres://username:password@localhost/database";
-var conString = "postgresql://postgres:password@wireapps.c3qk0ywowvqc.ap-southeast-1.rds.amazonaws.com:5432/wireapps";
+//var conString = "postgresql://myuser:mypassword@localhost:5432/postgres";
 
-// Routes
-app.get('/api/status', function(req, res) {
-  pg.connect(conString, function(err, client, done) {
-    if(err) {
-      return res.status(500).send('error fetching client from pool');
-    }
-    client.query('SELECT now() as time', [], function(err, result) {
-      //call `done()` to release the client back to the pool
-      done();
+//var conString = "postgresql://postgres:password@wireapps.c3qk0ywowvqc.ap-southeast-1.rds.amazonaws.com:5432/wireapps";
 
-      if(err) {
-        return res.status(500).send('error running query');
-      }
 
-      return res.json({
+
+
+// Define the connection configuration
+const pool = new Pool({
+  user: 'myuser',
+  host: 'localhost',
+  database: 'wireapps',
+  password: 'mypassword',
+  port: 5432, // Default PostgreSQL port
+});
+
+// Define the route for the /api/status endpoint
+app.get('/api/status', (req, res) => {
+  // Connect to the database and execute the query
+  pool.query('SELECT NOW() as current_time', (err, result) => {
+    if (err) {
+      console.error('Error fetching time:', err);
+      res.status(500).send('Error fetching time from the database');
+    } else {
+      // Extract the current time from the query result
+      const currentTime = result.rows[0].current_time;
+
+      // Send the current time as the API response
+      res.json({
         request_uuid: uuid.v4(),
-        time: result.rows[0].time
+        time: currentTime
       });
-    });
+    }
   });
 });
+
+
+
+
+
+
+// Routes
+// app.get('/api/status', function(req, res) {
+//   pg.connect(conString, function(err, client, done) {
+//     if(err) {
+//       return res.status(500).send('error fetching client from pool');
+//     }
+//     client.query('SELECT now() as time', [], function(err, result) {
+//       //call `done()` to release the client back to the pool
+//       done();
+
+//       if(err) {
+//         return res.status(500).send('error running query');
+//       }
+
+//       return res.json({
+//         request_uuid: uuid.v4(),
+//         time: result.rows[0].time
+//       });
+//     });
+//   });
+// });
 
 // Define a route for the homepage
 app.get('/', (req, res) => {
