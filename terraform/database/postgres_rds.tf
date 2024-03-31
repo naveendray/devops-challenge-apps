@@ -2,7 +2,7 @@ provider "aws" {
   region = "ap-southeast-1"
 }
 
-variable "db_password" {
+variable "DB_PASSWORD" {
   description = "Password for the database"
 }
 
@@ -14,7 +14,7 @@ resource "aws_db_instance" "postgres" {
   engine_version            = "16.1"
   instance_class            = "db.t3.micro"
   username                  = "adminwireapps"
-  password                  = var.db_password
+  password                  = var.DB_PASSWORD
   publicly_accessible       = false
   skip_final_snapshot       = true
   apply_immediately         = true
