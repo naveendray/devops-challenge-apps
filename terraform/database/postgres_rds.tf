@@ -13,7 +13,7 @@ resource "aws_db_instance" "postgres" {
   engine                    = "postgres"
   engine_version            = "16.1"
   instance_class            = "db.t3.micro"
-  username                  = "admin"
+  username                  = "admin-wireapps"
   password                  = var.db_password
   publicly_accessible       = false
   skip_final_snapshot       = true
