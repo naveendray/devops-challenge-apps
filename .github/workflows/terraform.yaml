@@ -32,7 +32,7 @@ jobs:
         working-directory: terraform/database
 
       - name: Terraform plan
-        run: terraform plan -auto-approve -var="db_password=${{ secrets.DB_PASSWORD }}"
+        run: terraform plan -var="db_password=${{ secrets.DB_PASSWORD }}"
         working-directory: terraform/database
 
       - name: Terraform apply
