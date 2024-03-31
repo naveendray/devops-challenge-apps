@@ -121,3 +121,4 @@ nbproject
 .terraform/
 *.tfstate
 *.tfstate.backup
+*.hcl
